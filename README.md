@@ -34,19 +34,17 @@ also use the lab 5 code — or start from an empty repo if your team prefers.
 
 If you choose to use one of the repositories we have provided, you can either make
 a fork of it or copy the subset of code you want into a completely new repository.
-
 ______
-
 # Sharify
 
 ## Team Members
 - Alena Qin (qinalena)
-  - User Stories:
+    - User Stories:
 - Junyu Li (Jasjas7777)
-  - User Stories: 
+    - User Stories: Signup/Login/Logout an account
 - Don Prathap C. Edirisinghe (DonPrathap)
-  - User Stories:
+    - User Stories:
 - Aseef Ali Hasan (aseef2289)
-  - User Stories: 
+    - User Stories:
 - Ashleigh Wong (Ash-uwu)
-  - User Stories: 
+    - User Stories: 
