@@ -16,7 +16,8 @@ public class TranslateTextPresenter implements TranslateTextOutputBoundary {
     /**
      * Prepares the success view for the Translate related Use Cases.
      *
-     * @param translatedText the output data
+     * @param outputText the output data
+     * @param inputLanguage the input language
      */
     @Override
     public void prepareSuccessView(String outputText, String inputLanguage) {
