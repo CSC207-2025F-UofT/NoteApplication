@@ -1,7 +1,7 @@
 package use_case.translateText;
 
 /**
- * Output Data for the TranslateText Use Case.
+ * Output Data for  the TranslateText Use Case.
  */
 public class TranslateTextOutputData {
 

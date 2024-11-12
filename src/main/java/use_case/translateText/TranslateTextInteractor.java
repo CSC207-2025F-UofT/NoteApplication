@@ -3,7 +3,7 @@ package use_case.translateText;
 import entity.TextTranslator;
 
 /**
- * The TranslateText Interactor.
+ * The TranslateText  Interactor.
  */
 public class TranslateTextInteractor implements TranslateTextInputBoundary {
 

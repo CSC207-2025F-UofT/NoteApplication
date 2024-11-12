@@ -15,7 +15,7 @@ public class TranslateTextPresenter implements TranslateTextOutputBoundary {
     }
 
     /**
-     * Prepares the success view for the Translate related Use Cases.
+     * Prepares the success  view for the Translate related Use Cases.
      *
      * @param translateTextOutputData the output data
      */

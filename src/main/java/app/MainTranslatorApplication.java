@@ -6,7 +6,7 @@ import use_case.translateText.TranslateTextDataAccessInterface;
 /**
  * An application where we can view and add to a note stored by a user.
  * <p>
- * This is a minimal example of using the password-protected user API from lab 5,
+ * This is a minimal  example of using the password-protected user API from lab 5,
  * but demonstrating the endpoint allowing you to store an arbitrary JSON object.
  * This functionality could be used in any project where your team wants to persist
  * data which is then accessible across devices.</p>

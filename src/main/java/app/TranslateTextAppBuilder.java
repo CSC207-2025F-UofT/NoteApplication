@@ -34,7 +34,7 @@ public class TranslateTextAppBuilder {
     }
 
     /**
-     * Creates the objects for the TranslateText Use Case and connects the TranslateTextView to its
+     * Creates the objects  for the TranslateText Use Case and connects the TranslateTextView to its
      * controller.
      * <p>This method must be called after addTranslateTextView!</p>
      * @return this builder

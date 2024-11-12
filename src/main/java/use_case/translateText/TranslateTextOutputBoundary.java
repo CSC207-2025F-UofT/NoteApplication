@@ -1,7 +1,7 @@
 package use_case.translateText;
 
 /**
- * The output boundary for the Translate Text Use Case.
+ * The output boundary  for the Translate Text Use Case.
  */
 public interface TranslateTextOutputBoundary {
     /**
