@@ -1,5 +1,9 @@
 package app;
 
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
+import entity.TextTranslator;
 import interface_adapter.translateText.TranslateTextController;
 import interface_adapter.translateText.TranslateTextPresenter;
 import interface_adapter.translateText.TranslateTextViewModel;
@@ -7,8 +11,6 @@ import use_case.translateText.TranslateTextDataAccessInterface;
 import use_case.translateText.TranslateTextInteractor;
 import use_case.translateText.TranslateTextOutputBoundary;
 import view.TranslateTextView;
-
-import javax.swing.*;
 
 /**
  * Builder for the Translator Application.
@@ -41,8 +43,10 @@ public class TranslateTextAppBuilder {
     public TranslateTextAppBuilder addTranslateTextUseCase() {
         final TranslateTextOutputBoundary translateTextOutputBoundary =
                 new TranslateTextPresenter(translateTextViewModel);
-        translateTextInteractor = new TranslateTextInteractor(
-                translateTextDAO, translateTextOutputBoundary);
+        final TextTranslator textTranslator = new TextTranslator();
+
+        translateTextInteractor = new TranslateTextInteractor(translateTextDAO, translateTextOutputBoundary,
+                textTranslator);
 
         final TranslateTextController controller = new TranslateTextController(translateTextInteractor);
         if (translateTextView == null) {
@@ -73,9 +77,6 @@ public class TranslateTextAppBuilder {
         frame.setSize(WIDTH, HEIGHT);
 
         frame.add(translateTextView);
-
-        // refresh so that the TranslateText will be visible when we start the program
-        translateTextInteractor.executeRefresh();
 
         return frame;
 

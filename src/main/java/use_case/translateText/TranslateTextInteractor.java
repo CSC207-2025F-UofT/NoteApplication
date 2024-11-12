@@ -1,7 +1,6 @@
 package use_case.translateText;
 
 import entity.TextTranslator;
-import interface_adapter.translateText.TranslateTextOutputBoundary;
 
 /**
  * The TranslateText Interactor.
@@ -24,6 +23,10 @@ public class TranslateTextInteractor implements TranslateTextInputBoundary {
     public void execute(TranslateTextInputData translateTextInputData) {
 
         try {
+            textTranslator.setInputLanguage(translateTextInputData.getInputLanguage());
+            textTranslator.setOutputLanguage(translateTextInputData.getOutputLanguage());
+            textTranslator.setInputText(translateTextInputData.getInputText());
+
             if (!dataAccessObject.getInputLanguages().contains(textTranslator.getInputLanguage())) {
                 translateTextOutputBoundary.prepareFailView("Selected language does not exist in translator.");
             }
@@ -32,12 +35,10 @@ public class TranslateTextInteractor implements TranslateTextInputBoundary {
                 translateTextOutputBoundary.prepareFailView("Translated language does not exist in translator.");
             }
             else {
-                textTranslator.setInputLanguage(translateTextInputData.getInputLanguage());
-                textTranslator.setOutputLanguage(translateTextInputData.getOutputLanguage());
-                textTranslator.setInputText(translateTextInputData.getInputText());
+
                 textTranslator.translate();
-                translateTextOutputBoundary.prepareSuccessView(textTranslator.getOutputText(),
-                        textTranslator.getInputLanguage());
+                final TranslateTextOutputData translateTextOutputData = new TranslateTextOutputData(textTranslator.getOutputText(), textTranslator.getInputLanguage());
+                translateTextOutputBoundary.prepareSuccessView(translateTextOutputData);
             }
         }
         catch (DataAccessException ex) {
