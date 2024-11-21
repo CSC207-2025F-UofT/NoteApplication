@@ -44,20 +44,21 @@ public class JokeAppView extends JPanel implements ActionListener, PropertyChang
         this.add(searchJokeButton);
         this.add(favoriteJokeButton);
     }
+
     /**
      * Configures the actions for each button.
      */
     private void setupButtons() {
-        // Generate Joke Action
-        generateJokeButton.addActionListener(e -> jokeController.execute("Generate a joke", ""));
 
-        // Search Joke Action
+        generateJokeButton.addActionListener(e -> jokeController.execute("Generate", ""));
+
         searchJokeButton.addActionListener(e -> {
-            String query = JOptionPane.showInputDialog(this, "Search for a joke:");
+            String query = JOptionPane.showInputDialog(this, "Search Joke:");
             if (query != null && !query.trim().isEmpty()) {
                 jokeController.execute("search", query);
             }
-        })
+        });
+
         favoriteJokeButton.addActionListener(e -> jokeController.execute("Favourite", ""));
     }
 
@@ -84,12 +85,12 @@ public class JokeAppView extends JPanel implements ActionListener, PropertyChang
     }
 
     /**
-     * Updates the UI fields based on the current state of JokeState
+     * Updates the UI fields based on the current state of JokeState.
      * @param state the current JokeState
      */
     private void updateFields(JokeState state) {
         jokeDisplayArea.setText(state.getJokeText());
-        favoriteJokeButton.setText(state.isFavorite() ? "Unfavourite Joke" : "Favorite Joke");
+        favoriteJokeButton.setText(state.isFavorite() ? "Unfavourite Joke" : "Favourite Joke");
         userIdLabel.setText("User ID: " + state.getErrorMessage());
     }
 
