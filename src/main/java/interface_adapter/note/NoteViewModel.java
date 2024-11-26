@@ -1,6 +1,6 @@
 package interface_adapter.note;
 
-import interface_adapter.ViewModel;
+import view.ViewModel;
 
 /**
  * The ViewModel for the NoteView.
