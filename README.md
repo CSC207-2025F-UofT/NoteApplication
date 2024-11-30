@@ -1,36 +1,59 @@
-# Note Application
+# The Translator
+# Team Names and GitHub Usernames:
+Julia Zaki / julia-zaki
 
-This is a minimal example demonstrating usage of the
-password-protected user part of the API used in lab 5.
+Christina Huang / HChristinaH
 
-You can find more information about the API endpoints in
-[the documentation](https://www.postman.com/cloudy-astronaut-813156/csc207-grade-apis-demo/documentation/fg3zkjm/5-password-protected-user).
+Edan Wong / 903Edan
+.
+Manjun Zhu / Karrrrmen
+.
 
-If your team is considering an application for which it would be convenient to
-store data in something like a database, you may find that the API calls demonstrated
-here will be useful in your project, as this will allow you to store
-an arbitrary JSON object associated with a username and password.
+# Main View Sketch
+![Main View](Images/Main%20View.jpg)
 
-In this application, a single note has a name (the "username" in terms of the API) and the note
-can be read by anyone who knows the name — but only edited by someone who
-knows the password for it.
+# User Stories
+# 1.
+Julia is learning French and is using the translator to help her translate words from English to French or vice versa.
+She uses the vocabulary feature where she can choose to store a certain word and its translation in a page called
+“Vocabulary”. She can access the page at any time allowing her to revise or recall the words to advance her learning
+process. The process is: Julia will click on the vocabulary page and manually input in both languages (view shown below)
+[Julia Zaki’s User Story]
+Potential API: Filebase
 
-You can see the documentation in the various files for more information.
+![Vocabulary View](Images/Vocabulary%20View.jpg)
 
-## Testing
+# 2.
+Christina is studying abroad in Japan and sees a sign at a subway. She is not very familiar with Japanese.
+She is in a rush and cannot easily type in the characters into her translation app so she uses the convert image
+to text feature to take a picture and translate the sign.
+[Christina Huang’s User Story]
+API: OCR Space
 
-The repo also includes an example of a use case interactor test, as well as
-an example of an end-to-end test which automates button clicks and inspects
-the contents of the actual views. This is something we discussed in the lectures
-about testing in CA but had not provided a code example of before. Note, one
-could also inspect the contents of the ViewModel objects instead when testing
-CA to make a similar test which would be less dependent on the details of the
-specific UI implementation.
+# 3.
+Edan is currently enrolled in a Korean learning course and several course materials are distributed in different
+format of files. He wants those text in the files to be translated directly into his mother language so that he
+does not have to copy and paste the text from the file into the translator. Therefore, he uses the
+translate-file feature to translate the materials in an efficient way.
+[Edan’s story]
+Potential API: document translation API
 
-## Project Starter Code
+![TranslateFile View](Images/TranslateFile%20View.jpg)
 
-Your team may choose to use this repo as starter code for your project. You could
-also use the lab 5 code — or start from an empty repo if your team prefers.
+# 4.
+Karmen is taking a history class and needs to watch a documentary in a foreign language. 
+To fully understand the documentary, she wants to translate its script into a language she’s comfortable with. 
+Using the "Translate Video" feature, Karmen gains a deeper understanding of the documentary.
+[Karmen Zhu’s User Story]
+Potential API: YouTube
 
-If you choose to use one of the repositories we have provided, you can either make
-a fork of it or copy the subset of code you want into a completely new repository.
+![TranslateVideo View.jpg](Images/TranslateVideo%20View.jpg)
+
+# 5.
+Roy is studying French in order to prepare for his French proficiency test.
+However, while studying the subject, he came across some words or sentences he does not know how to pronounce.
+Using the speaker button located at the bottom right side of text boxes, Roy can listen to the inputted pronounciation.
+[Roy Son's User Story]
+Potential API: Google Translate
+
+![TextToSpeech.jpg](Images/TextToSpeech.jpg)
