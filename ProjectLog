@@ -1,0 +1,40 @@
+Jason GenerateDataAccessObjects, sending requests to joke api, google gemni api
+All initial draft design
+Alex intitial main gui (View, ViewModel)
+Cheyl Read.md completed
+Cheyl Finalized UI design
+Jason User and Joke entity
+K1bbu7z User factory, Favrite UI
+Jason: generate usecse, explain use case
+
+
+TODO
+If time permits:
+K1bbu7z : Funnist Use Case, fav use case
+Mika: Search Use Case, sign up usecase, log out usecase, user data access object
+Alex: Fav_search Use Case, login usecase
+Cheyl: add to fav Use Case, Fav joke display pannel
+Jason: ViewManagerModel, AppBuilder
+
+If not 1:
+no login, sign up, log out, user data access object, user entity has no username and password. everything gone upon closing.
+No funniest?
+K1bbu7z : fav use case (including display pannel)
+Mika: Search Use Case
+Alex: Fav_search Use Case
+Cheyl: add to fav Use Case
+Jason: ViewManagerModel, AppBuilder
+
+If not 2 (not well thought out):
+No funniest, No fav_search
+K1bbu7z : fav use case (just display), AppBuilder
+Mika: Search Use Case, user data access object
+Alex: login,sign up usecase, 
+Cheyl: add to fav Use Case, log out usecase
+Jason: ViewManagerModel
+
+notes
+Login Signup logout logic (3 use cases)(create user from DB/File Data, write Data from curr User).
+DataAccessObject (getting user info)
+
+
