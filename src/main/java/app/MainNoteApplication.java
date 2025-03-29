@@ -1,56 +1,163 @@
 package app;
 
-import data_access.DBNoteDataAccessObject;
-import use_case.note.NoteDataAccessInterface;
+import data_access.InMemoryNoteDataAccessObject;
+import interface_adapter.add_task.AddTaskController;
+import interface_adapter.add_task.AddTaskPresenter;
+import interface_adapter.add_task.TaskViewModel;
+
+import interface_adapter.note.NoteController;
+import interface_adapter.note.NotePresenter;
+import interface_adapter.note.NoteViewModel;
+
+import interface_adapter.ai.AiController;
+import interface_adapter.ai.AiPresenter;
+
+import interface_adapter.calendar.CalendarController;
+import interface_adapter.calendar.CalendarPresenter;
+import interface_adapter.translation.TranslationController;
+import interface_adapter.translation.TranslationPresenter;
+import org.jetbrains.annotations.NotNull;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
+import use_cases.add_task.AddTaskInputBoundary;
+import use_cases.add_task.AddTaskInteractor;
+import use_cases.add_task.AddTaskOutputBoundary;
+
+import use_cases.note.NoteInputBoundary;
+import use_cases.note.NoteInteractor;
+import use_cases.note.NoteOutputBoundary;
+
+import use_cases.ai.AiInputBoundary;
+import use_cases.ai.AiInteractor;
+import use_cases.ai.AiOutputBoundary;
+import use_cases.ai.AiRequest;
+
+import use_cases.calendar.CalendarInputBoundary;
+import use_cases.calendar.CalendarInteractor;
+import use_cases.calendar.CalendarOutputBoundary;
+import use_cases.calendar.CalendarRequest;
+
+import use_cases.note.TranslationInputBoundary;
+import use_cases.note.TranslationInteractor;
+import use_cases.note.TranslationOutputBoundary;
+
+import view.CalendarView;
+import view.ChecklistView;
+import view.DashboardView;
+import view.NotesView;
 
 /**
- * An application where we can view and add to a note stored by a user.
- * <p>
- * This is a minimal example of using the password-protected user API from lab 5,
- * but demonstrating the endpoint allowing you to store an arbitrary JSON object.
- * This functionality could be used in any project where your team wants to persist
- * data which is then accessible across devices.</p>
- * <p>The code is intentionally somewhat incomplete to leave work to be done if your
- * team were to choose to work on a project which would require similar functionality.
- * For example, we have intentionally not created a full "Note" entity here, but
- * rather just represented a note as a string.
- * </p>
- * The ViewManager code has also been removed, since this minimal program only requires a single
- * view. Your team may wish to bring back the ViewManager or make your own implementation of supporting
- * switching between views depending on your project.
+ * The main application to boot the program.
  */
 public class MainNoteApplication {
+    static final int WIDTH = 1100;
+    static final int HEIGHT = 500;
 
-    /**
-     * The main entry point of the application.
-     * <p>
-     * The program will show you the note currently saved in the system.
-     * You are able to edit it and then save it to the system. You can refresh
-     * to update the note to reflect what was saved most recently. This
-     * uses the API from lab, so there is one database storing the note,
-     * which means that if anyone updates the note, that is what you will
-     * see when you refresh.
-     * </p> <p>
-     * You can generalize the code to allow you to
-     * specify which "user" to save the note for, which will allow your team
-     * to store information specific to your team which is password-protected.
-     * The username and password used in this application are currently for
-     * user jonathan_calver2, but you can change that. As you did in lab 3,
-     * you will likely want to store password information locally rather than
-     * in your repo. Or you can require the user to enter their credentials
-     * in your application; it just depends on what your program's main
-     * functionality.
-     * </p>
-     * @param args commandline arguments are ignored
-     */
     public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            final CardLayout cardLayout = new CardLayout();
+            final JPanel cardPanel = new JPanel(cardLayout);
 
-        // create the data access and inject it into our builder!
-        final NoteDataAccessInterface noteDataAccess = new DBNoteDataAccessObject();
+            final JPanel dashboardPanel = new DashboardView();
+            final JPanel notesPanel = createNotes();
+            final JPanel calendarPanel;
+            try {
+                calendarPanel = createCalendar();
+            }
+            catch (GeneralSecurityException | IOException exception) {
+                throw new RuntimeException(exception);
+            }
+            final JPanel checklistPanel = createChecklist();
 
-        final NoteAppBuilder builder = new NoteAppBuilder();
-        builder.addNoteDAO(noteDataAccess)
-               .addNoteView()
-               .addNoteUseCase().build().setVisible(true);
+            cardPanel.add(dashboardPanel, "Dashboard");
+            cardPanel.add(notesPanel, "Notes");
+            cardPanel.add(calendarPanel, "Calendar");
+            cardPanel.add(checklistPanel, "Checklist");
+
+            final JPanel buttonPanel = getButtonPanel(cardLayout, cardPanel);
+
+            final JPanel mainPanel = new JPanel(new BorderLayout());
+            mainPanel.add(buttonPanel, BorderLayout.WEST);
+            mainPanel.add(cardPanel, BorderLayout.CENTER);
+
+            final JFrame frame = new JFrame("ZenTask");
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            frame.setSize(WIDTH, HEIGHT);
+            frame.setContentPane(mainPanel);
+            frame.setVisible(true);
+        });
+    }
+
+    @NotNull
+    private static JPanel getButtonPanel(CardLayout cardLayout, JPanel cardPanel) {
+        final JButton showCalendarButton = new JButton("Calendar");
+        showCalendarButton.addActionListener(event -> cardLayout.show(cardPanel, "Calendar"));
+
+        final JButton showNotesButton = new JButton("Notes");
+        showNotesButton.addActionListener(event -> cardLayout.show(cardPanel, "Notes"));
+
+        final JButton showChecklistButton = new JButton("Checklist");
+        showChecklistButton.addActionListener(event -> cardLayout.show(cardPanel, "Checklist"));
+
+        final JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        buttonPanel.add(showCalendarButton);
+        buttonPanel.add(showNotesButton);
+        buttonPanel.add(showChecklistButton);
+        return buttonPanel;
+    }
+
+    private static JPanel createDashboard() {
+        final JPanel dashboardPanel = new JPanel();
+        dashboardPanel.add(new JLabel("Welcome to your Dashboard"));
+        return dashboardPanel;
+    }
+
+    private static JPanel createCalendar() throws GeneralSecurityException, IOException {
+        final CalendarView calendarView = new CalendarView();
+        final CalendarOutputBoundary calendarPresenter = new CalendarPresenter(calendarView);
+        final CalendarInputBoundary calendarInteractor = new CalendarInteractor(calendarPresenter, new CalendarRequest());
+        final CalendarController calendarController = new CalendarController(calendarInteractor);
+        calendarView.setCalendarController(calendarController);
+        return calendarView;
+    }
+
+    private static JPanel createNotes() {
+        final NoteViewModel noteViewModel = new NoteViewModel();
+        final NoteOutputBoundary notePresenter = new NotePresenter(noteViewModel);
+        final InMemoryNoteDataAccessObject inMemoryNoteDAO = new InMemoryNoteDataAccessObject();
+        final NoteInputBoundary noteInteractor = new NoteInteractor(notePresenter, inMemoryNoteDAO);
+        final NoteController controller = new NoteController(noteInteractor);
+        final NotesView notesView = new NotesView(noteViewModel);
+        notesView.setNoteController(controller);
+      
+        final AiOutputBoundary aiPresenter = new AiPresenter(notesView);
+        final AiRequest aiRequest = new AiRequest();
+        final AiInputBoundary aiInteractor = new AiInteractor(aiPresenter, aiRequest);
+        final AiController aiController = new AiController(aiInteractor);
+        notesView.setAiController(aiController);
+
+        final TranslationOutputBoundary translationPresenter = new TranslationPresenter(notesView);
+        final TranslationInputBoundary translationInteractor = new TranslationInteractor(translationPresenter);
+        final TranslationController translationController = new TranslationController(translationInteractor);
+        notesView.setTranslationController(translationController);
+
+        return notesView;
+    }
+
+    private static JPanel createChecklist() {
+        final TaskViewModel taskViewModel = new TaskViewModel();
+        final AddTaskOutputBoundary addTaskPresenter = new AddTaskPresenter(taskViewModel);
+        final AddTaskInputBoundary addTaskUseCaseInteractor = new AddTaskInteractor(addTaskPresenter);
+        final AddTaskController controller = new AddTaskController(addTaskUseCaseInteractor);
+        final ChecklistView checklistView = new ChecklistView(taskViewModel);
+        checklistView.setTaskController(controller);
+        taskViewModel.firePropertyChanged();
+        return checklistView;
     }
 }
