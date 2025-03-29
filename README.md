@@ -1,4 +1,13 @@
-# Note Application
+# Travel Advisors
+
+## Team Members
+
+- Teddy Yang (teddyyang8)
+- Yasmina Mimassi (yasmatopia)
+- Shirley Zhang (shirleyyzhang)
+- Ray Fang (rayf5372)
+- Sean Woo (seanwoo12)
+## Starter Readme Below
 
 This is a minimal example demonstrating usage of the
 password-protected user part of the API used in lab 5.
