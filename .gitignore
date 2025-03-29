@@ -5,6 +5,11 @@ out/
 .idea/easycode.ignore
 
 target/
+token.txt
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/workspace.xml
 
 ### Eclipse ###
 .apt_generated
