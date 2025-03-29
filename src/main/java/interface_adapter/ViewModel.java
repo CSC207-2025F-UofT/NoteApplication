@@ -14,7 +14,7 @@ public class ViewModel<T> {
 
     private final String viewName;
 
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    protected final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     private T state;
 
@@ -51,6 +51,10 @@ public class ViewModel<T> {
      */
     public void firePropertyChanged(String propertyName) {
         this.support.firePropertyChange(propertyName, null, this.state);
+    }
+
+    public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        this.support.firePropertyChange(propertyName, oldValue, newValue);
     }
 
     /**
