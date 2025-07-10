@@ -1,3 +1,6 @@
+# Group Info
+Nwabuife Amede: Buife-C
+
 # Note Application
 
 This is a minimal example demonstrating usage of the
