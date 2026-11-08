@@ -25,22 +25,31 @@ public class NoteInteractorTest {
             }
         };
 
-        NoteOutputBoundary noteOB = new NoteOutputBoundary() {
+
+
+        class OutputRecorder implements NoteOutputBoundary {
+            String data;
+            String failure;
+
             @Override
-            public void prepareSuccessView(String message) {
-                assertEquals("test", message);
+            public void prepareSuccessView(String data) {
+                this.data = data;
             }
 
             @Override
-            public void prepareFailView(String errorMessage) {
-                fail(errorMessage);
+            public void prepareFailView(String error) {
+                failure = error;
             }
-        };
+        }
 
-        NoteInteractor noteInteractor = new NoteInteractor(noteDAO, noteOB);
+        OutputRecorder recorder = new OutputRecorder();
+
+        NoteInteractor noteInteractor = new NoteInteractor(noteDAO, recorder);
 
         noteInteractor.executeRefresh();
 
+        assertEquals("test", recorder.data);
+        assertNull(recorder.failure);
 
     }
 }

@@ -18,15 +18,14 @@ import use_case.note.NoteDataAccessInterface;
  * The DAO for accessing notes stored in the database.
  *
  * <p>This class demonstrates how your group can use the password-protected user
- * endpoints of the API used in lab 5 to store persistent data in your program.
+ * endpoints of the API used in the Grade API lab to store persistent data in your program.
  * </p>
  *
  * <p>You can also refer to the lab 5 code for signing up a new user and other use cases.
  * </p>
  * See
  * <a href=
- * "https://www.postman.com/cloudy-astronaut-813156/
- * csc207-grade-apis-demo/documentation/fg3zkjm/5-password-protected-user">
+ * "https://www.postman.com/cloudy-astronaut-813156/csc207-apis-2026/collection/puzltp3/5-password-protected-user">
  *     the documentation</a>
  * of the API for more details.
  */
@@ -45,7 +44,6 @@ public class DBNoteDataAccessObject implements NoteDataAccessInterface {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
-        // POST METHOD
         final MediaType mediaType = MediaType.parse(CONTENT_TYPE_JSON);
         final JSONObject requestBody = new JSONObject();
         requestBody.put(USERNAME, user.getName());
@@ -55,7 +53,7 @@ public class DBNoteDataAccessObject implements NoteDataAccessInterface {
         requestBody.put("info", extra);
         final RequestBody body = RequestBody.create(requestBody.toString(), mediaType);
         final Request request = new Request.Builder()
-                .url("http://vm003.teach.cs.toronto.edu:20112/modifyUserInfo")
+                .url("https://csc207-20269-vm.teach.cs.toronto.edu/modifyUserInfo")
                 .method("PUT", body)
                 .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_JSON)
                 .build();
@@ -85,7 +83,7 @@ public class DBNoteDataAccessObject implements NoteDataAccessInterface {
         final String username = user.getName();
         final OkHttpClient client = new OkHttpClient().newBuilder().build();
         final Request request = new Request.Builder()
-                .url(String.format("http://vm003.teach.cs.toronto.edu:20112/user?username=%s", username))
+                .url(String.format("https://csc207-20269-vm.teach.cs.toronto.edu/user?username=%s", username))
                 .addHeader("Content-Type", CONTENT_TYPE_JSON)
                 .build();
         try {

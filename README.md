@@ -4,7 +4,7 @@ This is a minimal example demonstrating usage of the
 password-protected user part of the API used in lab 5.
 
 You can find more information about the API endpoints in
-[the documentation](https://www.postman.com/cloudy-astronaut-813156/csc207-grade-apis-demo/documentation/fg3zkjm/5-password-protected-user).
+[the documentation](https://www.postman.com/cloudy-astronaut-813156/csc207-apis-2026/collection/puzltp3/5-password-protected-user).
 
 If your team is considering an application for which it would be convenient to
 store data in something like a database, you may find that the API calls demonstrated
